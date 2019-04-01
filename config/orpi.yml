@@ -1,0 +1,5 @@
+---
+id: orpi
+url: "https://www.orpi.com/recherche/buy?transaction=buy&resultUrl=&realEstateTypes%5B0%5D=maison&locations%5B0%5D%5Bvalue%5D=saint-chamond&locations%5B0%5D%5Blabel%5D=Saint-Chamond%20%2842400%29&agency=&minSurface=&maxSurface=&newBuild=&oldBuild=&minPrice=&maxPrice=&sort=date-down&layoutType=mixte&nbBedrooms=&page=&minLotSurface=&maxLotSurface=&minStoryLocation=&maxStoryLocation="
+linksRegExp: maison.*saint-chamond
+referenceRegExp: "Réf. Orpi : (.*)<\/span>"

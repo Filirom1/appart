@@ -1,0 +1,5 @@
+---
+id: gti-immo
+url: "https://www.gti-immobilier.fr/annonces?id_polygon=&localisation_etendu=&visite_virtuelle=&categorie=vente&type_bien=maison&nb_pieces=&budget=&localisation=Saint-Chamond+%2842400%29&submit=Rechercher"
+linksRegExp: maison.*saint-chamond
+referenceRegExp: "Réf. : <\/strong>(.+)"

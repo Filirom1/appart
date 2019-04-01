@@ -1,0 +1,9 @@
+---
+id: cabinethyvrard
+url: https://www.cabinethyvrard.fr/vente/#/
+waitFor: 
+  selectorOrFunctionOrTimeout: 5000
+waitUntil: networkidle0
+linksRegExp: vente
+referenceRegExp: "<p class=\"reference\">Réf : [0-9]{4,}<\/p>"
+contentSelector: '.property_details'

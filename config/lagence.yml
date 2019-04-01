@@ -1,0 +1,6 @@
+---
+id: lagence
+url: https://www.lagence-saintchamond.fr/lsi-results/
+linksRegExp: lsi-ad-details
+referenceRegExp: "<p class=\"mandate\">Mandat : (.*)<\/p>"
+contentSelector: '.lsi-ad-detail-sidebar'

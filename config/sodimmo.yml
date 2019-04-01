@@ -1,0 +1,6 @@
+---
+id: sodimo
+url: https://www.sodimo-immobilier.com/lsi-results/
+linksRegExp: lsi-ad-details
+referenceRegExp: "<p class=\"mandate\">Mandat : (.*)<\/p>"
+contentSelector: '.lsi-ad-detail-sidebar'

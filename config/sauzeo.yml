@@ -1,0 +1,6 @@
+---
+id: sauzea
+url: http://www.sauzea-immobilier.fr/
+linksRegExp: ventemaison$
+referenceRegExp: ([A-Z]{2,}[0-9]{2,}) 
+contentSelector: '#contentWrap'

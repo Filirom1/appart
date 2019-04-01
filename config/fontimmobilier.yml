@@ -1,0 +1,6 @@
+---
+id: fontimmobilier
+url: http://www.font-immobilier.com/fr/search/?nature=1
+linksRegExp: search\/[0-9]+|Vente-Maison
+referenceRegExp: "<span class=\"reference\">Ref. ([0-9]{5,})<\/span>"
+contentSelector: 'body'

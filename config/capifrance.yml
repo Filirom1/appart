@@ -1,0 +1,6 @@
+---
+id: capifrance
+url: https://www.capifrance.fr/residentiel/acheter/recherche?affichage=grid-view&rayon=10000&geo=45.4653198%2C4.493570599999998&type=HOUSE&adresse=42400%20saint-chamond,%20france
+linksRegExp: vente|page
+referenceRegExp: "<span class=\"valeur\">([0-9]{5,})<\/span>"
+contentSelector: '.property-detail'

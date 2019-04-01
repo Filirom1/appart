@@ -1,0 +1,6 @@
+---
+id: athome
+url: "http://www.athome-immobilier.fr/transaction?type_de_propriete=Maison&ville=All&pieces=All&chambres=All&prix_mini=&prix_max="
+linksRegExp: maison|page=
+referenceRegExp: "<h1 class=\"title-bg\">.*-([a-z0-9]+)<\/h1>"
+contentSelector: '#container-sidebar'

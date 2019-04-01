@@ -1,0 +1,6 @@
+---
+id: liberation24
+url: http://www.liberation24immo.com/recherche/?offre=vente&type=3&prix_min&prix_max&code_postal=42400&reference
+linksRegExp: biens\/
+referenceRegExp: "class=\"ref\">([0-9]{3,})"
+contentSelector: "#maincontent"

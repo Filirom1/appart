@@ -1,0 +1,6 @@
+---
+id: notaires
+url: https://www.immobilier.notaires.fr/fr/annonces-immobilieres-liste?typeBien=MAI&typeTransaction=VENTE,VNI,VAE&localite=564&page=1&parPage=12
+linksRegExp: vente\/maison\/st-chamond
+referenceRegExp: "<div class=\"ref hidden-xs ng-binding\">Réf.&nbsp;: (.*)"
+waitUntil: networkidle0

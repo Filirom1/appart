@@ -1,0 +1,6 @@
+---
+id: century21
+url: "https://www.century21dorian-immobilier.com/annonces/achat-maison/s-0-/st-0-/b-0-/#/annonces/achat-maison/s-0-/st-0-/b-0-/page-1-90/"
+linksRegExp: \/detail\/
+referenceRegExp: "réf : ([0-9]{3,})<\/textarea>"
+contentSelector: "#page"

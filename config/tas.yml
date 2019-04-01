@@ -1,0 +1,6 @@
+---
+id: tas
+url: http://transactions-service.fr/resultats-recherche/?keyword=&type=maisons&location=any&bedrooms=any&min-area=&max-area=&min-price=any&max-price=any&property-id=
+linksRegExp: /annonce/.*(maison|villa|propriete)|page
+referenceRegExp: "<span class=\"meta-item-value\">([0-9]{3,})[0-9-a-zA-Z]*<\/span>"
+contentSelector: '.container-property-single'

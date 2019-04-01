@@ -1,0 +1,6 @@
+---
+id: iad
+url: "https://www.iadfrance.fr/rechercher/annonces?surface_min=&surface_max=&price_min=&price_max=&radius=5&id=&gp_id=2045184853&tags_list=%5B%7B%22type%22%3A%22gp_id%22%2C%22value%22%3A2045184853%2C%22name%22%3A%22Saint-Chamond+%2842400%29%2C+Loire%2C+Auvergne-Rh%5Cu00f4ne-Alpes%22%7D%5D&transaction_type=Vente&generic_type%5B%5D=MV&frequency=Journali%C3%A8re"
+linksRegExp: maison|page=
+referenceRegExp: "var idmandat = '([0-9]{4,})';"
+contentSelector: '#fiche-bien'
