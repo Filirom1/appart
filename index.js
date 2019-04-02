@@ -6,7 +6,17 @@ const async = require('async');
 const queue = require('async/queue');
 const mkdirp = require('mkdirp');
 const URL = require('url');
-var glob = require("glob")
+const glob = require("glob")
+const simpleGit = require('simple-git')('./');
+const gmail = require('gmail-send')({
+  user: process.env.GMAIL_USER,
+  pass: process.env.GMAIL_PASSWORD,
+  to:   process.env.GMAIL_TO,
+  subject: "appart"
+})
+
+const GIT_USER=process.env.GIT_USER
+const GIT_PASSWORD=process.env.GIT_PASSWORD
 
 let done = []
 let confs = {}
@@ -30,8 +40,40 @@ files.forEach( file => {
 let q = async.queue(analyze);
 
 q.drain = function() {
-  console.log('all items have been processed');
-  process.exit()
+  simpleGit.status((err, status) => {
+    if(err){ throw err; }
+    async.map(status.not_added, (file, cb) => {
+      if (! file.match(/^config\/.*.yml$/)){
+        return cb()
+      }
+      let result = YAML.parse(file)
+      return result
+    }, (err, results) => {
+      if(err){ throw err; }
+      results = results.compact
+      let text = YAML.stringify(results)
+      if(!results || results.length == 0){
+        console.log("Nothing changed")
+        process.exit()
+      }
+      console.log(text)
+      simpleGit.add('./output/')
+      .commit("update output")
+      .removeRemote('origin')
+      .addRemote('origin', `https://${GIT_USER}:${GIT_PASSWORD}@github.com/Filirom1/appart.git`)
+      .push(['-u', 'origin', 'master'], () => {
+        console.log('git pushed')
+        gmail({
+          text:    text
+        }, (err, res)=>{
+          if(err){ throw err; }
+          console.log("email sent", res)
+          process.exit()
+        });
+           
+      });
+    })
+  })
 };
 
 q.error = function(err, params) {
