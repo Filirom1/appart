@@ -2,5 +2,5 @@
 id: sauzea
 url: http://www.sauzea-immobilier.fr/
 linksRegExp: ventemaison$
-referenceRegExp: ([a-zA-Z]{2,}[0-9]{2,}) 
+referenceRegExp: ([A-Z]{2,}[0-9]{4,}) 
 contentSelector: '#contentWrap'

@@ -43,17 +43,22 @@ q.drain = function() {
   simpleGit.status((err, status) => {
     if(err){ throw err; }
     async.map(status.not_added, (file, cb) => {
-      if (! file.match(/^config\/.*.yml$/)){
+      console.log(file)
+      if (! file.match(/^output\/.*\.yml$/)){
         return cb()
       }
-      let result = YAML.parse(file)
-      return result
+      fs.readFile(file, "utf8", (err, data)=>{
+        if(err){
+          return cb(err)
+        }
+        let result = YAML.parse(data)
+        return cb(null, result)
+      })
     }, (err, results) => {
       if(err){ throw err; }
-      results = results.compact
       let text = YAML.stringify(results)
       if(!results || results.length == 0){
-        console.log("Nothing changed")
+        console.log("Nothing new")
         process.exit()
       }
       console.log(text)
@@ -81,9 +86,10 @@ q.error = function(err, params) {
 };
 
 function analyze(params, cb){
-  if(done.indexOf(params.url) !== -1){
+  if(done.indexOf(params.url) !== -1 && ! params.index){
     return cb()
   };
+  delete params.index
   puppeteer.launch().then(async browser => {
     const page = await browser.newPage();
     await page.goto(params.url, { waitUntil: params.waitUntil });
@@ -114,7 +120,7 @@ function analyze(params, cb){
       let content = cropContent(params, html)
       let refSlug=ref.replace(/[^a-zA-Z0-9-_]/g, '')
       await fs.promises.writeFile(`./output/${params.id}/${refSlug}.html`, content)
-      await fs.promises.writeFile(`./output/${params.id}/${refSlug}.yml`, YAML.stringify({url: params.url, title: params.title, ref: ref}))
+      await fs.promises.writeFile(`./output/${params.id}/${refSlug}.yml`, YAML.stringify({url: params.url, title: title, ref: ref}))
       await page.screenshot({path: `./output/${params.id}/${refSlug}.png`, fullPage: true});
     }
 
@@ -151,9 +157,9 @@ if(process.argv[2]){
   let conf = Object.values(confs).find( conf => {
     return conf.id == process.argv[2]
   })
-  q.push(conf)
+  q.push({...conf, index: true})
 }else{
   Object.values(confs).forEach(async (conf) => {
-    q.push(conf)
+    q.push({...conf, index: true})
   })
 }
