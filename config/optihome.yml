@@ -1,5 +1,5 @@
 ---
 id: optihome
 url: "https://www.optimhome.com/annonces/achat?affichage=grid-view&rayon=10000&geo=45.476088%2C4.512711899999999&type=HOUSE&adresse=42400%20saint-chamond,%20france"
-linksRegExp: vente\/
+linksRegExp: vente\/saint_chamond\/maison
 referenceRegExp: "Référence<\/span> <span class=\"valeur\">([0-9]{3,})<\/span>"
