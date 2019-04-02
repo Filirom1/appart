@@ -1,83 +1,117 @@
-const HCCrawler = require('headless-chrome-crawler');
 const fs = require('fs');
 const YAML = require('yaml');
 const cheerio = require('cheerio');
-
+const puppeteer = require('puppeteer');
+const async = require('async');
+const queue = require('async/queue');
 const mkdirp = require('mkdirp');
-require('url');
+const URL = require('url');
+var glob = require("glob")
 
-(async () => {
+let done = []
+let confs = {}
+let confFiles = fs.readdirSync('./config')
+confFiles.forEach( (file) => {
+  const confStr = fs.readFileSync(`./config/${file}`, "utf8")
+  const conf = YAML.parse(confStr)
+  conf.host = URL.parse(conf.url).host
+  conf.title == (conf.title || 'title')
+  confs[conf.host] = conf
 
-  let confs = {}
-  let confFiles = fs.readdirSync('./config')
-  confFiles.forEach( (file) => {
-    const confStr = fs.readFileSync(`./config/${file}`, "utf8")
-    const conf = YAML.parse(confStr)
-    conf.host = new URL(conf.url).host
-    conf.title == (conf.title || 'title')
-    confs[conf.host] = conf
+  mkdirp.sync(`./output/${conf.id}`)
+})
 
-    mkdirp(`./output/${conf.id}`)
-  })
+let files = glob.sync("./output/*/*.yml")
+files.forEach( file => {
+  let fileContent = fs.readFileSync(file, 'utf8')
+  done.push(YAML.parse(fileContent).url)
+})
 
-  const crawler = await HCCrawler.launch({
-    // Function to be evaluated in browsers
-    evaluatePage: (() => (
-      {
-        title: $('title').text(),
-        body: $('body').html(),
+let q = async.queue(analyze);
+
+q.drain = function() {
+  console.log('all items have been processed');
+  process.exit()
+};
+
+q.error = function(err, params) {
+  console.error(params.url, err);
+};
+
+function analyze(params, cb){
+  if(done.indexOf(params.url) !== -1){
+    return cb()
+  };
+  puppeteer.launch().then(async browser => {
+    const page = await browser.newPage();
+    await page.goto(params.url, { waitUntil: params.waitUntil });
+    if(params.waitFor) {
+      await page.waitFor(params.waitFor);
+    }
+    const html = await page.content();
+    const title = await page.title();
+    const hrefs = await page.$$eval('a', anchors => [].map.call(anchors, a => a.href));
+    hrefs.forEach(href => {
+      if(! href.match(params.linksRegExp)){
+        return
       }
-    )),
-    // Function to be called with evaluated results from browsers
-    onError: err => {
-      console.error(err)
-    },
-    onSuccess: result => {
-      try{
-
-        let host = new URL(result.response.url).host
-        let conf = confs[host]
-        let content = null
-        if(conf.contentSelector){
-          let $ = cheerio.load(result.result.body)
-          content = $(conf.contentSelector).html()
-        }else{
-          content = result.result.body
-        }
-        //console.log(result)
-        if(content){
-          //console.log(content)
-          let refMatch = result.result.body.match(conf.referenceRegExp)
-          console.log(result.response.url, !! refMatch)
-          if(refMatch && refMatch.length > 1){
-            let ref = refMatch[1].replace(/\//g, '-')
-            fs.writeFileSync(`./output/${conf.id}/${ref}.html`, content)
-          }
-        }
-        //console.log(result.links)
-        result.links.forEach(async (link) => {
-          if(link.match(conf.linksRegExp)){
-            await crawler.queue({url: link, waitFor: conf.waitFor, waitUntil: conf.waitUntil})
-          }
-        })
-      }catch(err) {
-        console.err(err)
+      if (! href.match(/^http/)){
+        return
       }
-    },
+
+      if ( URL.parse(href).host != URL.parse(params.url).host ){
+        return
+      }
+      q.push({...params, url: href.replace(/#.*/, '')})
+    })
+
+    let ref = parseRef(params, html)
+    console.log(ref, params.url)
+
+    if(ref){
+      let content = cropContent(params, html)
+      let refSlug=ref.replace(/[^a-zA-Z0-9-_]/g, '')
+      await fs.promises.writeFile(`./output/${params.id}/${refSlug}.html`, content)
+      await fs.promises.writeFile(`./output/${params.id}/${refSlug}.yml`, YAML.stringify({url: params.url, title: params.title, ref: ref}))
+      await page.screenshot({path: `./output/${params.id}/${refSlug}.png`, fullPage: true});
+    }
+
+    await browser.close();
+    done.push(params.url)
+    cb(null, {html, title, hrefs})
+  }).catch( err => {
+    cb(err);
   });
+}
 
-  if(process.argv[2]){
-    let conf = Object.values(confs).find( conf => {
-      return conf.id == process.argv[2]
-    })
-    console.log(conf.url)
-    await crawler.queue({url: conf.url, waitFor: conf.waitFor, waitUntil: conf.waitUntil});
+function cropContent(conf, html){
+  let content = null
+  if(conf.contentSelector){
+    let $ = cheerio.load(html)
+    content = $(conf.contentSelector).html()
   }else{
-    Object.values(confs).forEach(async (conf) => {
-      await crawler.queue({url: conf.url, waitFor: conf.waitFor, waitUntil: conf.waitUntil});
-    })
+    content = html
   }
+  return content
+}
 
-  await crawler.onIdle(); // Resolved when no queue is left
-  await crawler.close(); // Close the crawler
-})();
+function parseRef(conf, html){
+  let refMatch = html.match(conf.referenceRegExp)
+  if(refMatch && refMatch.length > 1){
+    let ref = refMatch[1].replace(/\//g, '-')
+    return ref
+  }else{
+    return null
+  }
+}
+
+if(process.argv[2]){
+  let conf = Object.values(confs).find( conf => {
+    return conf.id == process.argv[2]
+  })
+  q.push(conf)
+}else{
+  Object.values(confs).forEach(async (conf) => {
+    q.push(conf)
+  })
+}
