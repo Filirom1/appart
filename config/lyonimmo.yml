@@ -1,0 +1,5 @@
+---
+id: lyonimmo
+url: "http://www.lyonimmo.net/index.php?op=results&site_frm_select_commune=42400&site_frm_pieces=&type_bien=Maison&budget=&ref="
+linksRegExp: achat,maison
+referenceRegExp: "Ref. ([0-9]{4,})"
