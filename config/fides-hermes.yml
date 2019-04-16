@@ -1,0 +1,5 @@
+---
+id: fides-hermes
+url: "http://www.fides-hermes.com/catalog/advanced_search_result.php?action=update_search&search_id=&C_28_search=EGAL&C_28_type=UNIQUE&C_28=Vente&C_27_REPLACE=2&C_27_search=EGAL&C_27_type=UNIQUE&C_27=2&C_65_REPLACE=Saint+paul+en+jarez%2C+Saint+chamond&C_65_search=CONTIENT&C_65_type=TEXT&C_65=Saint+paul+en+jarez%2C+Saint+chamond&C_30_MIN=&C_30_search=COMPRIS&C_30_type=NUMBER&C_30_MAX=&C_33_search=COMPRIS&C_33_type=NUMBER&C_33_MIN="
+linksRegExp: fiches
+referenceRegExp: "<span itemprop=\"name\">Ref. : ([^<]+)</span>"
