@@ -1,0 +1,5 @@
+---
+id: pap
+url: https://www.pap.fr/annonce/vente-maisons-l-horme-42152-g23326g23497g23579g23602-a-partir-du-4-pieces-jusqu-a-450000-euros
+linksRegExp: annonces/maison
+referenceRegExp: "Réf. : ([^ ]+)"
