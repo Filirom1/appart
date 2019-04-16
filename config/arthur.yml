@@ -1,0 +1,5 @@
+---
+id: arthur
+url: "https://www.arthurimmo.com/recherche,basic.htm?ci=420207&idtt=2&pxmin=0&rayon=5&saisie=Saint-Chamond&tri=d_dt_crea&#ci=420207&idqfix=1&idtt=2&lang=fr&pres=prestige&rayon=5&surf_terrainmax=Max&surf_terrainmin=Min&surfacemax=Max&surfacemin=Min&tri=d_dt_crea"
+linksRegExp: chamond
+referenceRegExp: "Référence : ([0-9]{4,})"

@@ -1,0 +1,5 @@
+---
+id: immo-de-la-plaine
+url: "https://www.immobilieredelaplaine.com/cherchez-votre-bien/?property-id=&location%5B%5D=saint-chamond-42400&location%5B%5D=saint-jean-bonnefond-42650&location%5B%5D=sorbiers-42290&status%5B%5D=any&type%5B%5D=maison&min-price=any&max-price=any"
+linksRegExp: (chamond|sorbiers|bonnefonds)
+referenceRegExp: "<h4 class=\"title\"> ID du bien immobilier : ([^<]+)<\/h4>"

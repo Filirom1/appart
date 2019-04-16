@@ -18,6 +18,8 @@ const gmail = require('gmail-send')({
 const GIT_USER=process.env.GIT_USER
 const GIT_PASSWORD=process.env.GIT_PASSWORD
 
+const SKIP_PERSIST = process.env.SKIP_PERSIST
+
 let done = []
 let confs = {}
 let confFiles = fs.readdirSync('./config')
@@ -56,27 +58,29 @@ q.drain = function() {
       })
     }, (err, results) => {
       if(err){ throw err; }
+      results = results.filter(function(el) { return el; })
       let text = YAML.stringify(results)
       if(!results || results.length == 0){
         console.log("Nothing new")
         process.exit()
       }
       console.log(text)
-      simpleGit.add('./output/')
-      .commit("update output")
-      .removeRemote('origin')
-      .addRemote('origin', `https://${GIT_USER}:${GIT_PASSWORD}@github.com/Filirom1/appart.git`)
-      .push(['-u', 'origin', 'master'], () => {
-        console.log('git pushed')
-        gmail({
-          text:    text
-        }, (err, res)=>{
-          if(err){ throw err; }
-          console.log("email sent", res)
-          process.exit()
+      if(! SKIP_PERSIST){
+        simpleGit.add('./output/')
+        .commit("update output")
+        .removeRemote('origin')
+        .addRemote('origin', `https://${GIT_USER}:${GIT_PASSWORD}@github.com/Filirom1/appart.git`)
+        .push(['-u', 'origin', 'master'], () => {
+          console.log('git pushed')
+          gmail({
+            text:    text
+          }, (err, res)=>{
+            if(err){ throw err; }
+            console.log("email sent", res)
+            process.exit()
+          });
         });
-           
-      });
+      }
     })
   })
 };
@@ -100,7 +104,7 @@ function analyze(params, cb){
     const title = await page.title();
     const hrefs = await page.$$eval('a', anchors => [].map.call(anchors, a => a.href));
     hrefs.forEach(href => {
-      if(! href.match(params.linksRegExp)){
+      if(! href.match(new RegExp(params.linksRegExp, 'i'))){
         return
       }
       if (! href.match(/^http/)){

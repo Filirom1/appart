@@ -1,0 +1,5 @@
+---
+id: axecession
+url: "http://www.axecession.fr/immobilier-a-vendre-Saint-Chamond.htm"
+linksRegExp: maison.*chamond-vente
+referenceRegExp: "Référence<\/td><td class=\"r1\">([^<]+)<span class=\"acc\">"

@@ -1,0 +1,5 @@
+---
+id: neyret
+url: "http://www.neyret-immobilier.com/fr/transaction"
+linksRegExp: transaction\/(\d|.*sorbiers|.*chamond|.*bonnefonds)
+referenceRegExp: "<li>Ref. (.*)<\/li>"
