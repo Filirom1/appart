@@ -1,0 +1,5 @@
+---
+id: pbh
+url: "https://www.pbh-immo.com/fr/listing.html?loc=vente&type%5B%5D=maison&insee%5B%5D=42207&insee%5B%5D=42302&insee%5B%5D=42207&surfacemin=&prixmax=&tri=date1-desc&page=1&coordonnees=&supplementaires=0&prixmin=&surfacemax=&terrain=&numero=&idpers=&options=&piecemin=&cpdep%5B%5D=fr_42&pays="
+linksRegExp: annonce-
+referenceRegExp: "<span>Réf.  ([^<]+)</span>"
