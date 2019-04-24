@@ -1,5 +1,5 @@
 ---
 id: propriete-privee
-url: "https://www.proprietes-privees.com/annonces-immobilieres?tradePrestation=&location=42400+SAINT-CHAMOND&region=&department=&city=28146&type%5B%5D=maison&nb_pieces=&salePrice%5B%5D=&salePrice%5B%5D="
+url: "https://www.proprietes-privees.com/annonces-immobilieres?orderBy=modifiedDate&typeOfOrder=desc&tradePrestation%5B%5D=&type%5B%5D=maison&location=42400+SAINT-CHAMOND&region=&department=&city=28146&radius=10&reference=&salePrice%5B%5D=&salePrice%5B%5D=&nb_pieces=&nb_chambres=&surface%5B%5D=&surface%5B%5D=&surface_terrain%5B%5D=&surface_terrain%5B%5D="
 linksRegExp: ASA$
 referenceRegExp: "<strong>Ref. : ([0-9A-Z]{6,})<\/strong>"

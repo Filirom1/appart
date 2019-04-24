@@ -1,5 +1,5 @@
 ---
 id: michon-vaizan
-url: "http://www.michon-vaizan.com/immobilier/pays/achat/france.htm#idpays=250&idqfix=1&idtt=2&idtypebien=2&lang=fr&pres=basic&surf_terrainmax=Max&surf_terrainmin=Min&surfacemax=Max&surfacemin=Min&tri=d_dt_crea"
+url: "http://www.michon-vaizan.com/immobilier/pays/achat/france.htm#ci=420207&idqfix=1&idtt=2&idtypebien=2&lang=fr&pres=basic&rayon=10&surf_terrainmax=Max&surf_terrainmin=Min&surfacemax=Max&surfacemin=Min&tri=d_dt_crea"
 linksRegExp: achat\/maison
-referenceRegExp: "Référence de l'annonce : (.*)<\/span>"
+referenceRegExp: "Référence de l'annonce : ([0-9]+)<\/span>"

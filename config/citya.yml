@@ -1,6 +1,6 @@
 ---
 id: citya
 url: "https://www.citya.com/annonces/vente/agence-citya-saint-chamond-313"
-linksRegExp: \/vente\/maison\/saint-chamond
+linksRegExp: \/vente\/maison
 referenceRegExp: "référence ([A-Z0-9]{5,})"
 contentSelector: ".colActu"

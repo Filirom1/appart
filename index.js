@@ -9,13 +9,13 @@ const URL = require('url');
 const glob = require("glob")
 const simpleGit = require('simple-git')('./');
 const gmail = require('gmail-send')({
-  user: process.env.GMAIL_USER,
+  user: process.env.GMAIL_USER || "romain.philibert@gmail.com",
   pass: process.env.GMAIL_PASSWORD,
-  to:   process.env.GMAIL_TO,
+  to:   process.env.GMAIL_TO || "romain.philibert@gmail.com",
   subject: "appart"
 })
 
-const GIT_USER=process.env.GIT_USER
+const GIT_USER=process.env.GIT_USER ||  "Filirom1"
 const GIT_PASSWORD=process.env.GIT_PASSWORD
 
 const SKIP_PERSIST = process.env.SKIP_PERSIST
@@ -90,7 +90,13 @@ q.error = function(err, params) {
 };
 
 function analyze(params, cb){
+  params.count = params.count || 0
   if(done.indexOf(params.url) !== -1 && ! params.index){
+    console.log(`Already done for ${params.url}`)
+    return cb()
+  };
+  if(params.count >= 2){
+    console.log(`Count(${params.count}) too high for ${params.url}`)
     return cb()
   };
   delete params.index
@@ -114,18 +120,26 @@ function analyze(params, cb){
       if ( URL.parse(href).host != URL.parse(params.url).host ){
         return
       }
-      q.push({...params, url: href.replace(/#.*/, '')})
+      href = href.replace(/\/\//, '/').replace("http:/", "http://").replace("https:/", "https://")
+      if (! params.hashLinks ){
+        href = href.replace(/#.*/, '')
+      }
+      q.push({...params, url: href, count: params.count+1})
     })
 
     let ref = parseRef(params, html)
     console.log(ref, params.url)
 
-    if(ref){
+    if(ref && html.match(/(chamond|sorbier|bonnefonds|talaudi|jarez|horme)/)){
       let content = cropContent(params, html)
       let refSlug=ref.replace(/[^a-zA-Z0-9-_]/g, '')
       await fs.promises.writeFile(`./output/${params.id}/${refSlug}.html`, content)
       await fs.promises.writeFile(`./output/${params.id}/${refSlug}.yml`, YAML.stringify({url: params.url, title: title, ref: ref}))
       await page.screenshot({path: `./output/${params.id}/${refSlug}.png`, fullPage: true});
+    }
+    if(params.debug){
+      await page.screenshot({path: `./output/${params.id}/debug.png`, fullPage: true});
+      await fs.promises.writeFile(`./output/${params.id}/debug.html`, html)
     }
 
     await browser.close();

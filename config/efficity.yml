@@ -1,5 +1,5 @@
 ---
 id: efficity
-url: "https://www.efficity.com/achat-immobilier/results/?inputed_location=Saint-Chamond&property_type=2&max_price=&min_nb_of_rooms=1"
+url: "https://www.efficity.com/achat-immobilier/results/?inputed_location=Saint-Chamond%2CSaint-Jean-Bonnefonds%2CL%27Horme%2CSorbiers+%2842%29%2CLa+Talaudi%C3%A8re&min_price=&max_price=&property_type=2&min_living_area=&max_living_area=&min_nb_of_rooms=1"
 linksRegExp: maison_
 referenceRegExp: "\/house\/([0-9]+)\/"

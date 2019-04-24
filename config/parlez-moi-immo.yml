@@ -1,6 +1,6 @@
 ---
 id: parlez-moi-immo
 url: "https://www.parlezmoidimmo.fr/annonces?id_polygon=332149&localisation_etendu=&visite_virtuelle=&categorie=vente&type_bien=maison&nb_pieces=&surface=&budget=&localisation=1+secteur+d%C3%A9fini&submit=Rechercher"
-linksRegExp: maison.*saint-chamond
+linksRegExp: maison.*
 referenceRegExp: "([0-9A-Z]{2,}\/[0-9][0-9]\/[0-9A-Z]{4,})"
 contentSelector: .detail-offre-page

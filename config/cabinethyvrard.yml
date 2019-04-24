@@ -1,8 +1,8 @@
 ---
 id: cabinethyvrard
-url: https://www.cabinethyvrard.fr/vente/#/
-waitFor: 5000
+url: https://www.cabinethyvrard.fr/vente/
+waitFor: .description
 waitUntil: networkidle0
-linksRegExp: vente
-referenceRegExp: "<p class=\"reference\">Réf : [0-9]{4,}<\/p>"
-contentSelector: '.property_details'
+linksRegExp: property
+referenceRegExp: "<p class=\"reference\">Réf : ([0-9]{4,})<\/p>"
+hashLinks: true

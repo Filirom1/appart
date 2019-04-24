@@ -1,5 +1,5 @@
 ---
 id: competences
-url: "http://www.competencesimmo.fr/recherche?a=1&c=Saint-Chamond%2C+&radius=5&d=1&e=illimit%C3%A9&f=0&x=illimit%C3%A9&do_search=Rechercher"
-linksRegExp: chamond
+url: "http://www.competencesimmo.fr/recherche?a=1&b%5B%5D=house&c=Saint-Chamond%2C+&radius=10&d=1&e=illimit%C3%A9&f=0&x=illimit%C3%A9&do_search=Rechercher"
+linksRegExp: maison
 referenceRegExp: "Référence<\/td><td class=\"r1\">([^<]*)<span class=\"acc\">"
